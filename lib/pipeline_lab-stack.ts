@@ -42,7 +42,7 @@ export class PipelineLabStack extends Stack {
             environment: {
               buildImage: LinuxBuildImage.STANDARD_5_0
             },
-            buildSpec: BuildSpec.fromSourceFilename('../build_specs/cdk_build_specs.yml')
+            buildSpec: BuildSpec.fromSourceFilename('build_specs/cdk_build_specs.yml')
           })
         })
       ]
