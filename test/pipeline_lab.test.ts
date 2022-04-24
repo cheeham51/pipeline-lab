@@ -6,9 +6,9 @@
 // example resource in lib/pipeline_lab-stack.ts
 test('SQS Queue Created', () => {
 //   const app = new cdk.App();
-//     // WHEN
+// //     // WHEN
 //   const stack = new PipelineLab.PipelineLabStack(app, 'MyTestStack');
-//     // THEN
+// //     // THEN
 //   const template = Template.fromStack(stack);
 
 //   template.hasResourceProperties('AWS::SQS::Queue', {
