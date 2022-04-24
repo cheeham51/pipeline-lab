@@ -11,7 +11,5 @@ test('Test Pipeline Lab Stack', () => {
 // //     // THEN
   const template = Template.fromStack(stack);
 
-  template.hasResourceProperties('AWS::SQS::Queue', {
-    VisibilityTimeout: 300
-  });
+  template.hasResource('AWS::CodePipeline::Pipeline', {});
 });
