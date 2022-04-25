@@ -14,6 +14,6 @@ new BillingStack(app, 'BillingStack', {
   emailAddress: 'cheeham51@hotmail.com',
 });
 
-const serviceStackProd = new ServiceStack(app, 'ServiceStackProd');
+const serviceStack = new ServiceStack(app, 'ServiceStack');
 
-pipelineLabStack.addServiceStage(serviceStackProd, 'Prod');
+pipelineLabStack.addServiceStage(serviceStack, 'Prod');
