@@ -28,7 +28,7 @@ export class ServiceStack extends Stack {
 
         this.serviceEndpointOutput = new CfnOutput(this, 'ApiEndpointOutput', {
             exportName: `ServiceEndpoint${props.stageName}`,
-            value: `${myApi.url}/${myApi.deploymentStage.stageName}`,
+            value: myApi.url,
             description: 'API Endpoint'
         })
 
