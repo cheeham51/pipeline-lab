@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import 'source-map-support/register';
+// import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import { PipelineLabStack } from '../lib/pipeline_lab-stack';
 import { BillingStack } from '../lib/billing-stack';
@@ -22,7 +22,7 @@ const serviceStackProd = new ServiceStack(app, 'ServiceStackProd', {
   stageName: "Prod"
 });
 
-const testStage = pipelineLabStack.addServiceStage(serviceStackProd, 'Test');
+const testStage = pipelineLabStack.addServiceStage(serviceStackTest, 'Test');
 
 const prodStage = pipelineLabStack.addServiceStage(serviceStackProd, 'Prod');
 
