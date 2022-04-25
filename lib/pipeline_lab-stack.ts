@@ -13,7 +13,8 @@ export class PipelineLabStack extends Stack {
       pipelineName: 'PipelineLab'
     })
 
-    const sourceOutput = new Artifact()
+    const cdkSourceOutput = new Artifact('CdkSourceOutput')
+    const serviceSourceOutput = new Artifact('ServiceSourceOutput')
 
     pipeline.addStage({
       stageName: 'Source',
@@ -22,9 +23,17 @@ export class PipelineLabStack extends Stack {
           owner: 'cheeham51',
           repo: 'pipeline-lab',
           branch: 'main',
-          actionName: 'PipelineSrouce',
+          actionName: 'cdkPipelineSource',
           oauthToken: SecretValue.secretsManager('github-token'),
-          output: sourceOutput
+          output: cdkSourceOutput
+        }),
+        new GitHubSourceAction({
+          owner: 'cheeham51',
+          repo: 'webapp_lab',
+          branch: 'main',
+          actionName: 'ServiceSource',
+          oauthToken: SecretValue.secretsManager('github-token'),
+          output: serviceSourceOutput
         })
       ]
     })
@@ -36,7 +45,7 @@ export class PipelineLabStack extends Stack {
       actions: [
         new CodeBuildAction({
           actionName: 'CdkBuild',
-          input: sourceOutput,
+          input: cdkSourceOutput,
           outputs: [cdkBuildOutput],
           project: new PipelineProject(this, 'CdkBuildProject', {
             environment: {
