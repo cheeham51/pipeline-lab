@@ -1,10 +1,11 @@
 import { Stack, StackProps, SecretValue } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { Artifact, Pipeline } from 'aws-cdk-lib/aws-codepipeline';
+import { Artifact, IStage, Pipeline } from 'aws-cdk-lib/aws-codepipeline';
 import { CodeBuildAction, CloudFormationCreateUpdateStackAction, GitHubSourceAction } from 'aws-cdk-lib/aws-codepipeline-actions';
 import { BuildSpec, LinuxBuildImage, PipelineProject } from 'aws-cdk-lib/aws-codebuild';
 
 import { ServiceStack } from './service-stack';
+import { BillingStack } from './billing-stack';
 
 export class PipelineLabStack extends Stack {
   private readonly pipeline: Pipeline;
@@ -90,8 +91,8 @@ export class PipelineLabStack extends Stack {
 
   }
 
-  public addServiceStage(serviceStack: ServiceStack, stageName: string) {
-    this.pipeline.addStage({
+  public addServiceStage(serviceStack: ServiceStack, stageName: string): IStage {
+    return this.pipeline.addStage({
       stageName: stageName,
       actions: [
         new CloudFormationCreateUpdateStackAction({
@@ -106,5 +107,16 @@ export class PipelineLabStack extends Stack {
         })
       ]
     })
+  }
+
+  public addBillingStackToStage(billingStack: BillingStack, stage: IStage) {
+    stage.addAction(
+      new CloudFormationCreateUpdateStackAction({
+        actionName: 'BillingUpdate',
+        stackName: billingStack.stackName,
+        templatePath: this.cdkBuildOutput.atPath(`${billingStack.stackName}.template.json`),
+        adminPermissions: true
+      })
+    )
   }
 }
