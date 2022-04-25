@@ -38,7 +38,8 @@ export class PipelineLabStack extends Stack {
       ]
     })
 
-    const cdkBuildOutput = new Artifact()
+    const cdkBuildOutput = new Artifact('CdkBuildOutput')
+    const serviceBuildOutput = new Artifact('ServiceBuildOutput')
 
     pipeline.addStage({
       stageName: 'Build',
@@ -52,6 +53,17 @@ export class PipelineLabStack extends Stack {
               buildImage: LinuxBuildImage.STANDARD_5_0
             },
             buildSpec: BuildSpec.fromSourceFilename('build_specs/cdk_build_specs.yml')
+          })
+        }),
+        new CodeBuildAction({
+          actionName: 'ServiceBuild',
+          input: serviceSourceOutput,
+          outputs: [serviceBuildOutput],
+          project: new PipelineProject(this, 'ServiceBuildProject', {
+            environment: {
+              buildImage: LinuxBuildImage.STANDARD_5_0
+            },
+            buildSpec: BuildSpec.fromSourceFilename('build_specs/service_build_specs.yml')
           })
         })
       ]
