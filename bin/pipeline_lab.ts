@@ -22,8 +22,8 @@ const serviceStackProd = new ServiceStack(app, 'ServiceStackProd', {
   stageName: "Prod"
 });
 
-const prodStage = pipelineLabStack.addServiceStage(serviceStackProd, 'Prod');
-
 const testStage = pipelineLabStack.addServiceStage(serviceStackProd, 'Test');
+
+const prodStage = pipelineLabStack.addServiceStage(serviceStackProd, 'Prod');
 
 pipelineLabStack.addBillingStackToStage(billingStack, prodStage);
