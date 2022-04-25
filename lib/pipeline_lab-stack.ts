@@ -97,7 +97,7 @@ export class PipelineLabStack extends Stack {
         new CloudFormationCreateUpdateStackAction({
           actionName: "ServiceUpdate",
           stackName: serviceStack.stackName,
-          templatePath: this.cdkBuildOutput.atPath(`${serviceStack.stackName}.template.json}`),
+          templatePath: this.cdkBuildOutput.atPath(`${serviceStack.stackName}.template.json`),
           adminPermissions: true,
           parameterOverrides: {
             ...serviceStack.serviceCode.assign(this.serviceBuildOutput.s3Location)
