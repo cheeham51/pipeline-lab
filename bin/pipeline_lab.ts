@@ -9,7 +9,7 @@ const app = new cdk.App();
 
 const pipelineLabStack = new PipelineLabStack(app, 'PipelineLabStack', {});
 
-const billingStack = new BillingStack(app, 'BillingStackProd', {
+const billingStack = new BillingStack(app, 'BillingStack', {
   budgetAmount: 5,
   emailAddress: 'cheeham51@hotmail.com',
 });
