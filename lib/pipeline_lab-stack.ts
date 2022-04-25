@@ -10,7 +10,8 @@ export class PipelineLabStack extends Stack {
 
     const pipeline = new Pipeline(this, 'MyPipeline', {
       crossAccountKeys: false,
-      pipelineName: 'PipelineLab'
+      pipelineName: 'PipelineLab',
+      restartExecutionOnUpdate: true
     })
 
     const cdkSourceOutput = new Artifact('CdkSourceOutput')
